@@ -93,8 +93,6 @@ void GOTO() {
 	cout << 1 << endl;
 FLAG:
 	cout << 2 << endl;
-
-
 }
 
 void Array() {

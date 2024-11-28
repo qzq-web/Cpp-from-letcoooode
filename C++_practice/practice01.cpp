@@ -102,6 +102,37 @@ void Array() {
 	cout << array1 << endl;
 }
 
+void Reverse_num() {
+	int array1[] = { 5,1,8,2,0,7,3,4,10,3 }, t;
+	int len = sizeof(array1) / sizeof(array1[0]) - 1;
+	for (int i = 0; i <= len/2; i++) {
+		t = array1[i];
+		array1[i] = array1[len - i];
+		array1[len-i] = t;
+	}
+	cout << "逆置后的元素为：";
+	for (int i = 0; i <= len; i++)
+		cout << array1[i] << ' ';
+}
+
+//真几把难搞啊C语言
+void bubble_sort() {
+	int arry[] = { -1034,9,8245,7,456,5389,4,-33214,2,0.678 }, i, j, t;
+	int len = sizeof(arry) / sizeof(arry[0]);
+	for (i = 0; i < len - 1; i++) {
+		for (j = 0; j < len - i - 1; j++) {
+			if (arry[j] > arry[j + 1]) {
+				t = arry[j];
+				arry[j] = arry[j + 1];
+				arry[j + 1] = t;
+			}
+		}
+	}
+	cout << "排序后为:";
+	for (i = 0; i < len; i++)
+		cout << arry[i] << ' ';
+}
+
 int main() {
 	int x;
 	
@@ -112,6 +143,9 @@ int main() {
 	cout << "5.水仙花数" << endl;
 	cout << "6.goto语句" << endl;
 	cout << "7.数组" << endl;
+	cout << "8.元素逆置" << endl;
+	cout << "9.冒泡排序" << endl;
+
 
 	cout << "请选择使用的函数:\n" << endl;
 	cin >> x;
@@ -122,6 +156,8 @@ int main() {
 	if (x == 5) shuixianhua();
 	if (x == 6) GOTO();
 	if (x == 7) Array();
+	if (x == 8) Reverse_num();
+	if (x == 9) bubble_sort();
 
 	system("pause");
 

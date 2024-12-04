@@ -133,33 +133,33 @@ void bubble_sort() {
 		cout << arry[i] << ' ';
 }
 
-int main() {
-	int x;
-	
-	cout << "1.基本操作01" << endl;
-	cout << "2.基本操作02" << endl;
-	cout << "3.三个数字比大小" << endl;
-	cout << "4.猜数字（100以内）" << endl;
-	cout << "5.水仙花数" << endl;
-	cout << "6.goto语句" << endl;
-	cout << "7.数组" << endl;
-	cout << "8.元素逆置" << endl;
-	cout << "9.冒泡排序" << endl;
-
-
-	cout << "请选择使用的函数:\n" << endl;
-	cin >> x;
-	if (x == 1) base01();
-	if (x == 2) base02();
-	if (x == 3) compare_three_num();
-	if (x == 4) guess_num();
-	if (x == 5) shuixianhua();
-	if (x == 6) GOTO();
-	if (x == 7) Array();
-	if (x == 8) Reverse_num();
-	if (x == 9) bubble_sort();
-
-	system("pause");
-
-	return 0;
-}
+//int main() {
+//	int x;
+//	
+//	cout << "1.基本操作01" << endl;
+//	cout << "2.基本操作02" << endl;
+//	cout << "3.三个数字比大小" << endl;
+//	cout << "4.猜数字（100以内）" << endl;
+//	cout << "5.水仙花数" << endl;
+//	cout << "6.goto语句" << endl;
+//	cout << "7.数组" << endl;
+//	cout << "8.元素逆置" << endl;
+//	cout << "9.冒泡排序" << endl;
+//
+//
+//	cout << "请选择使用的函数:\n" << endl;
+//	cin >> x;
+//	if (x == 1) base01();
+//	if (x == 2) base02();
+//	if (x == 3) compare_three_num();
+//	if (x == 4) guess_num();
+//	if (x == 5) shuixianhua();
+//	if (x == 6) GOTO();
+//	if (x == 7) Array();
+//	if (x == 8) Reverse_num();
+//	if (x == 9) bubble_sort();
+//
+//	system("pause");
+//
+//	return 0;
+//}

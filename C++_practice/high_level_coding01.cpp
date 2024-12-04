@@ -23,7 +23,8 @@ public:
 		return -1;
 	}
 	//双指针移除元素法
-	//我就只能这么认为了，return的slow依旧指向remove_element函数里的最后一个元素？
+	//我就只能这么认为了，return的slow依旧指向remove_element函数里的最后一个元素？	bingo
+	//回答：引用传递，形参会修饰实参
 	int remove_element(vector<int>& num, int val) {
 		//双指针法，一个快一个慢，如果不等于就跳过，等于就覆盖
 		int slow = 0, fast;
@@ -33,8 +34,8 @@ public:
 		}
 		return slow;
 	}
-
-	vector<int> order_arry_square(vector<int>& nums) {
+	//引用传递，形参会修饰实参
+	int order_arry_square(vector<int>& nums) {
 		int i, len = nums.size(), e, j, t;
 		for (i = 0; i < len; i++) {
 			e = nums[i];
@@ -54,7 +55,7 @@ public:
 		//c++使用algorithm头文件引入快速排序,不知道头文件里还有没有其他的排序算法
 		sort(nums.begin(), nums.end());
 		
-		return nums;
+		return i;
 	}
 
 	//滑动窗口，只不过是自己试着写一遍
@@ -132,8 +133,6 @@ public:
 					arr[i][starty] = count;
 					count++;
 				}
-
-
 				startx++;
 				starty++;
 				offset++;
@@ -144,6 +143,36 @@ public:
 			return arr;
 	}
 
+	//弊端，这种代码再面对海量数据时，时间复杂度极高
+	int sectionSum(vector<int>nums,int a,int b) {
+		
+		int sum = 0;
+		for (int i = a; i <= b; i++) {
+			sum += nums[i];
+		}
+		return sum;
+	}
+
+	//前缀和思想，再处理大量数据时有用
+	int sectionSum_improve(int n,vector<int> p, vector<int> nums) {
+		int sum = 0;
+		int a, b;
+		cout << "请输入数组元素：" << endl;
+		//使用另一个数组，一边输入一边求和
+		for (int i = 0; i < n; i++) {
+			cin >> nums[i];
+			sum = sum + nums[i];
+			p[i] = sum;
+		}
+		cout << "请输入区间：" << endl;
+		while (cin >> a >> b) {
+			if (a == 0)
+				cout << p[b];
+			else
+				cout << p[b] - p[a - 1];
+		}
+		return 0;
+	}
 };
 
 
@@ -157,6 +186,8 @@ int main() {
 	cout << "3.有序数组平方" << endl;
 	cout << "4.寻找最小连续子数组" << endl;
 	cout << "5.螺旋矩阵" << endl;
+	cout << "6.计算区间和" << endl;
+	cout << "7.计算区间和(使用前缀和的思想)" << endl;
 
 	cout << "请选择功能：";
 	cin >> x;
@@ -190,9 +221,9 @@ int main() {
 			  break;
 		case 3: {
 			vector<int> nums = { -7,-3,2,3,11 };
-			vector<int> result=solution.order_arry_square(nums);
-			for (int i = 0; i < result.size(); i++)
-				cout << result[i] << ' ';
+			int result=solution.order_arry_square(nums);
+			for (int i = 0; i < result; i++)
+				cout << nums[i] << ' ';
 		}
 			  break;
 		case 4: {
@@ -213,8 +244,35 @@ int main() {
 					cout << result[i][j] << '\t';
 				cout << '\n';
 			}
-				
+		}
+		case 6: {
+			int n;
+			cout << "请输入数组的长度：";
+			cin >> n;
+			//c++里用（）指定数组长度
+			vector<int> nums(n);
+			cout << "请输入数组元素：" << endl;
+			
+			for (int i = 0; i < n; i++)
+				cin >> nums[i];
 
+			int a=INT16_MIN, b=INT16_MIN;
+			while (1) {
+				cout << "请输入计算的区间：" << endl;
+				cin >> a >> b;
+				int result=solution.sectionSum(nums, a, b);
+				cout << result << endl;
+			}
+		}
+
+		case 7: {
+			int n;
+			cout << "请输入数组的长度：";
+			cin >> n;
+			//c++里用（）指定数组长度
+			vector<int> nums(n);
+			vector<int> p(n, 0);
+			solution.sectionSum_improve(n,nums, p);	
 		}
 	}
 }

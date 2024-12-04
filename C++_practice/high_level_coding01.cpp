@@ -84,9 +84,64 @@ public:
 		return result == INT32_MAX ? 0 : result;
 	}
 	//二维数组要用俩vector
-	vector<vector<int>> generateMatrix(vector<int> nums, int n) {
+	vector<vector<int>> generateMatrix(int n) {
 		int i, j;
+		//使用vector定义一个二维数组
+		//首先定义二维数组的行数，有n行
+		//vector <vector<int>> arr(n);
+		//再定义二维数组的列数
+		//vector <vector<int>>arr(n, vector<int>(n));
+		//最后可以对二维数组中的元素赋值
+		vector <vector<int>>arr(n, vector<int>(n, 0));
+		int startx = 0, starty = 0;		//控制每一圈的起始位置
+		int offset = 1;
+		int count = 1;
+		int loop = n / 2;
+		while (loop--) {		//控制圈数
+				//首先实现行的遍历
+				for (j = startx; j < n - offset; j++) {
+					arr[startx][j] = count;
+					count++;
+				}
+				//再实现列的遍历
+				/*for (i = starty; i < n - offset; i++) {
+					arr[i][j] = count;
+					count++;
+				}
+				for (; j > startx; j--) {
+					arr[i][j] = count;
+					count++;
+				}
+				for (; i > starty; i--) {
+					arr[i][j] = count;
+					count++;
+				}*/
 
+
+				//这是我原来写的
+				for (i = starty; i < n - offset; i++) {
+					arr[i][n-offset] = count;
+					count++;
+				}
+				for (j = n - offset; j > startx; j--) {
+					arr[n - offset][j] = count;
+					count++;
+				}
+				//我写的是对的，啊啊啊啊啊啊，只是这里的列条件没有判断对，超
+				for (i = n - offset; i > starty; i--) {
+					arr[i][starty] = count;
+					count++;
+				}
+
+
+				startx++;
+				starty++;
+				offset++;
+			}
+			if (n % 2 != 0) {
+				arr[n / 2][n / 2] = count;
+			}
+			return arr;
 	}
 
 };
@@ -101,7 +156,7 @@ int main() {
 	cout << "2.移除元素" << endl;
 	cout << "3.有序数组平方" << endl;
 	cout << "4.寻找最小连续子数组" << endl;
-
+	cout << "5.螺旋矩阵" << endl;
 
 	cout << "请选择功能：";
 	cin >> x;
@@ -147,6 +202,19 @@ int main() {
 			cin >> s;
 			int result = solution.minSubArrayLen(nums, s);
 			cout << "长度为：" << result << endl;
+		}
+		case 5: {
+			int n;
+			cout << "请输入二维数组的大小：";
+			cin >> n;
+			vector<vector<int>> result = solution.generateMatrix(n);
+			for (int i = 0; i < n; i++) {
+				for (int j = 0; j < n; j++)
+					cout << result[i][j] << '\t';
+				cout << '\n';
+			}
+				
+
 		}
 	}
 }

@@ -180,23 +180,103 @@ public:
 };
 
 struct LNode {
-
+	int data;
+	LNode* next;
+	LNode(int x) : data(x), next(NULL) {}	//C++要求必须要有这句话
 };
 class Solution_LinkList {
 public:
-	LNode* createList(int val) {
 
+	//这里创建列表写的不太好
+	LNode* createList() {
+		int val;
+		LNode* head, * p, * q;
+		head= (LNode*)malloc(sizeof(LNode));
+		p = head;
+		cout << "请输入链表的值：" << endl;
+		cin >> val;
+		while (val != 9999) {
+			p->data = val;
+			q = (LNode*)malloc(sizeof(LNode));
+			p->next = q;
+			p = q;
+			cin >> val;
+		}
+		p->next = 0;
+		return head;
 	}
 
+
+	void printList(LNode* head) {
+		LNode* p = head;
+		while (p->next != NULL) {
+			cout << p->data << ' ';
+			p = p->next;
+		}
+	}
+
+	void dropList(LNode* head) {
+		LNode* cur = head;
+		LNode* next = nullptr;
+		while (cur != NULL) {
+			next = cur->next;
+			delete cur;
+			cur = next;
+		}
+		head = nullptr;
+	}
+
+	//使用虚拟头节点删除元素
 	LNode* remove_element(LNode* head, int val) {
-
+		LNode* dummyhead = new LNode(0);	//设置一个虚拟头节点
+		dummyhead->next = head;
+		LNode* cur = dummyhead;
+		while (cur->next != NULL) {
+			if (cur->next->data == val) {
+				LNode* tmp = head;
+				head = tmp->next;
+				delete tmp;
+				cur->next = head;
+			}
+			else {
+				cur = head;
+				head = head->next;
+			}
+		}
+		head = dummyhead->next;	//复位head
+		delete dummyhead;	//删除虚拟头节点
+		return head;
 	}
 
+	
+
+};
+
+class MyLinkList :public Solution_LinkList{
+public:
+
+	//构造方法，创建虚拟头节点
+	MyLinkList() {
+		_dummyhead = new LNode(0);
+	}
+
+	int get(LNode* cur, int index) {
+		
+		_dummyhead->next = cur;
+		for (int i = 1; i < index; i++) {
+			cur = cur->next;
+		}
+		return cur->data;
+	}
+	LNode* addAtHead(LNode* cur, int val) {
+
+	}
 };
 
 int main() {
 	Solution_array solution;
-	
+	MyLinkList mylinklist;
+
 	int x;
 
 	cout << "1.二分查找" << endl;
@@ -208,6 +288,8 @@ int main() {
 	cout << "7.计算区间和(使用前缀和的思想)" << endl;
 	cout << "8.开发商购买土地" << endl;
 	cout << "9.移除链表元素" << endl;
+	cout << "10.设计链表" << endl << "\t---get" << endl << "\t---addAtHead" << endl << "\t---addAtTail"
+		<< endl << "\t---addAtIndex" << endl << "\t---deleteAtIndex" << endl;
 
 	cout << "请选择功能：";
 	cin >> x;
@@ -254,6 +336,7 @@ int main() {
 			int result = solution.minSubArrayLen(nums, s);
 			cout << "长度为：" << result << endl;
 		}
+			  break;
 		case 5: {
 			int n;
 			cout << "请输入二维数组的大小：";
@@ -265,6 +348,7 @@ int main() {
 				cout << '\n';
 			}
 		}
+			  break;
 		case 6: {
 			int n;
 			cout << "请输入数组的长度：";
@@ -284,7 +368,7 @@ int main() {
 				cout << result << endl;
 			}
 		}
-
+			  break;
 		case 7: {
 			int n;
 			cout << "请输入数组的长度：";
@@ -294,11 +378,31 @@ int main() {
 			vector<int> p(n, 0);
 			solution.sectionSum_improve(n,nums, p);	
 		}
+			  break;
 		case 8: {
 			cout << "功能正在开发中，请稍后再试" << endl;
 		}
+			  break;
 		case 9: {
-
+			int x;
+			LNode* L = mylinklist.createList();
+			mylinklist.printList(L);
+			cout << "请输入删除的节点：";
+			cin >> x;
+			LNode* Lr = mylinklist.remove_element(L, x);
+			mylinklist.printList(Lr);
+			mylinklist.dropList(Lr);
+		}
+			  break;
+		case 10: {
+			int x;
+			LNode* L = mylinklist.createList();
+			cout << "现在的列表是:" << endl;
+			mylinklist.printList(L);
+			cout << "要查找第几个元素：";
+			cin >> x;
+			int get_ele = mylinklist.get(L, x);
+			cout << "该元素是：" << get_ele << endl;
 
 		}
 	}

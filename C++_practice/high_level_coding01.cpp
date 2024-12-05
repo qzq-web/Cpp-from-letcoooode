@@ -180,20 +180,20 @@ public:
 };
 
 struct LNode {
-	int data;
-	LNode* next;
-	LNode(int x) : data(x), next(NULL) {}	//C++要求必须要有这句话
-};
+		int data;
+		LNode* next;
+		LNode(int x) : data(x), next(NULL) {}	//C++要求必须要有这句话
+	};	
 class Solution_LinkList {
 public:
-
+	
 	//这里创建列表写的不太好
 	LNode* createList() {
 		int val;
 		LNode* head, * p, * q;
 		head= (LNode*)malloc(sizeof(LNode));
 		p = head;
-		cout << "请输入链表的值：" << endl;
+		cout << "请输入链表的值：(输入9999终止)" << endl;
 		cin >> val;
 		while (val != 9999) {
 			p->data = val;
@@ -202,7 +202,7 @@ public:
 			p = q;
 			cin >> val;
 		}
-		p->next = 0;
+		p->next = NULL;
 		return head;
 	}
 
@@ -253,22 +253,31 @@ public:
 };
 
 class MyLinkList :public Solution_LinkList{
-public:
+//private限定_dummyhead只能在此类使用
+//_dummyhead是C++里的一种约定
+//一定要先声明一下，再使用
+private:
+	LNode* dummyhead = new LNode(0);
+	int size = 0;
 
+public:
 	//构造方法，创建虚拟头节点
-	MyLinkList() {
-		_dummyhead = new LNode(0);
-	}
+	//MyLinkList() {
+	//	_dummyhead = new LNode(0);
+	//}
 
 	int get(LNode* cur, int index) {
-		
-		_dummyhead->next = cur;
+		dummyhead->next = cur;
 		for (int i = 1; i < index; i++) {
 			cur = cur->next;
 		}
+		if (index > size || (index <= 0))
+			return -1;
 		return cur->data;
 	}
+
 	LNode* addAtHead(LNode* cur, int val) {
+		dummyhead->next = cur;
 
 	}
 };
@@ -385,6 +394,7 @@ int main() {
 			  break;
 		case 9: {
 			int x;
+			//现在的L指向没有头节点的单链表第一个结点
 			LNode* L = mylinklist.createList();
 			mylinklist.printList(L);
 			cout << "请输入删除的节点：";
@@ -404,6 +414,11 @@ int main() {
 			int get_ele = mylinklist.get(L, x);
 			cout << "该元素是：" << get_ele << endl;
 
+			cout << "请输入要插入的元素：(9999结束)" << endl;
+			cin >> x;
+			while (x != 9999) {
+				mylinklist.addAtHead(L, x);
+			}
 		}
 	}
 }

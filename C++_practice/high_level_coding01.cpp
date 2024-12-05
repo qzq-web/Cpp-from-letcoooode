@@ -4,7 +4,7 @@
 using namespace std;
 //好几把难，头要炸了
 
-class Solution {
+class Solution_array {
 public:
 	int binary_search(vector<int>& arry1, int target) {
 		int low, mid, high;
@@ -173,11 +173,29 @@ public:
 		}
 		return 0;
 	}
+
+	int purchase_land() {
+		//这个题目后续再做
+	}
 };
 
+struct LNode {
+
+};
+class Solution_LinkList {
+public:
+	LNode* createList(int val) {
+
+	}
+
+	LNode* remove_element(LNode* head, int val) {
+
+	}
+
+};
 
 int main() {
-	Solution solution;
+	Solution_array solution;
 	
 	int x;
 
@@ -188,6 +206,8 @@ int main() {
 	cout << "5.螺旋矩阵" << endl;
 	cout << "6.计算区间和" << endl;
 	cout << "7.计算区间和(使用前缀和的思想)" << endl;
+	cout << "8.开发商购买土地" << endl;
+	cout << "9.移除链表元素" << endl;
 
 	cout << "请选择功能：";
 	cin >> x;
@@ -273,6 +293,13 @@ int main() {
 			vector<int> nums(n);
 			vector<int> p(n, 0);
 			solution.sectionSum_improve(n,nums, p);	
+		}
+		case 8: {
+			cout << "功能正在开发中，请稍后再试" << endl;
+		}
+		case 9: {
+
+
 		}
 	}
 }

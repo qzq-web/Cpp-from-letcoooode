@@ -185,34 +185,32 @@ struct LNode {
 		LNode(int x) : data(x), next(NULL) {}	//C++要求必须要有这句话
 	};	
 class Solution_LinkList {
+
 public:
+	LNode* dummyhead = new LNode(0);
+	int size = 0;
 	
-	//这里创建列表写的不太好
+	///////////这里的链表创建和数据输入，不要用值终止条件不等于多少了，重新写一下，逻辑错误很多
+
+
 	LNode* createList() {
-		int val;
-		LNode* head, * p, * q;
-		head= (LNode*)malloc(sizeof(LNode));
-		p = head;
-		cout << "请输入链表的值：(输入9999终止)" << endl;
-		cin >> val;
-		while (val != 9999) {
-			p->data = val;
-			q = (LNode*)malloc(sizeof(LNode));
-			p->next = q;
-			p = q;
-			cin >> val;
-		}
-		p->next = NULL;
-		return head;
+		
 	}
 
 
 	void printList(LNode* head) {
-		LNode* p = head;
-		while (p->next != NULL) {
-			cout << p->data << ' ';
-			p = p->next;
+		if (head == nullptr) {
+			cout << "链表为空" << endl;
 		}
+		else {
+			LNode* p = head;
+			cout << "链表元素为：" << endl;
+			while (p->next != NULL) {
+				cout << p->data << ' ';
+				p = p->next;
+			}
+		}
+		
 	}
 
 	void dropList(LNode* head) {
@@ -228,7 +226,7 @@ public:
 
 	//使用虚拟头节点删除元素
 	LNode* remove_element(LNode* head, int val) {
-		LNode* dummyhead = new LNode(0);	//设置一个虚拟头节点
+		//设置一个虚拟头节点
 		dummyhead->next = head;
 		LNode* cur = dummyhead;
 		while (cur->next != NULL) {
@@ -248,17 +246,13 @@ public:
 		return head;
 	}
 
-	
-
 };
 
 class MyLinkList :public Solution_LinkList{
 //private限定_dummyhead只能在此类使用
 //_dummyhead是C++里的一种约定
 //一定要先声明一下，再使用
-private:
-	LNode* dummyhead = new LNode(0);
-	int size = 0;
+
 
 public:
 	//构造方法，创建虚拟头节点
@@ -268,22 +262,27 @@ public:
 
 	int get(LNode* cur, int index) {
 		dummyhead->next = cur;
+		if (index > size || (index <= 0))
+			return -1;
 		for (int i = 1; i < index; i++) {
 			cur = cur->next;
 		}
-		if (index > size || (index <= 0))
-			return -1;
 		return cur->data;
 	}
 
-	LNode* addAtHead(LNode* cur, int val) {
-		dummyhead->next = cur;
-
+	LNode* addAtHead(LNode* cur) {
+		
 	}
+
+	LNode* addAtTail(LNode* cur, int val) {
+	}
+		
+
 };
 
 int main() {
 	Solution_array solution;
+	Solution_LinkList solution_linklist;
 	MyLinkList mylinklist;
 
 	int x;
@@ -399,26 +398,13 @@ int main() {
 			mylinklist.printList(L);
 			cout << "请输入删除的节点：";
 			cin >> x;
-			LNode* Lr = mylinklist.remove_element(L, x);
+			LNode* Lr = solution_linklist.remove_element(L, x);
 			mylinklist.printList(Lr);
 			mylinklist.dropList(Lr);
 		}
 			  break;
 		case 10: {
-			int x;
-			LNode* L = mylinklist.createList();
-			cout << "现在的列表是:" << endl;
-			mylinklist.printList(L);
-			cout << "要查找第几个元素：";
-			cin >> x;
-			int get_ele = mylinklist.get(L, x);
-			cout << "该元素是：" << get_ele << endl;
-
-			cout << "请输入要插入的元素：(9999结束)" << endl;
-			cin >> x;
-			while (x != 9999) {
-				mylinklist.addAtHead(L, x);
-			}
+			
 		}
 	}
 }

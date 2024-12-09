@@ -179,49 +179,57 @@ public:
 	}
 };
 
+
 struct LNode {
 		int data;
 		LNode* next;
 		LNode(int x) : data(x), next(NULL) {}	//C++要求必须要有这句话
 	};	
-class Solution_LinkList {
+class MyLinkList{
+//private限定_dummyhead只能在此类使用
+//_dummyhead是C++里的一种约定
+//一定要先声明一下，再使用
+
 
 public:
 	LNode* dummyhead = new LNode(0);
-	int size = 0;
-	
-	///////////这里的链表创建和数据输入，不要用值终止条件不等于多少了，重新写一下，逻辑错误很多
+	int size;
 
+	MyLinkList() :size(0) {}
 
 	LNode* createList() {
-		
-	}
-
-
-	void printList(LNode* head) {
-		if (head == nullptr) {
-			cout << "链表为空" << endl;
-		}
-		else {
-			LNode* p = head;
-			cout << "链表元素为：" << endl;
-			while (p->next != NULL) {
-				cout << p->data << ' ';
-				p = p->next;
+		LNode* head = nullptr;
+		LNode* tail = nullptr;
+		int val;
+		cout << "请输入链表值：(创建链表，输入-1结束)" << endl;
+		while (true) {
+			cin >> val;
+			if (val == -1)
+				break;
+			LNode* newNode = new LNode(val);
+			if (head == nullptr) {
+				head = newNode;
+				tail = newNode;
+				size++;
+			}
+			else {
+				tail->next = newNode;
+				tail = newNode;
+				size++;
 			}
 		}
-		
+		return head;
 	}
 
-	void dropList(LNode* head) {
+
+	LNode* dropList(LNode* head) {
 		LNode* cur = head;
-		LNode* next = nullptr;
 		while (cur != NULL) {
-			next = cur->next;
-			delete cur;
-			cur = next;
+			LNode* temp = cur;
+			cur = cur->next;
+			delete temp;
 		}
-		head = nullptr;
+		return cur;
 	}
 
 	//使用虚拟头节点删除元素
@@ -245,44 +253,97 @@ public:
 		delete dummyhead;	//删除虚拟头节点
 		return head;
 	}
-
-};
-
-class MyLinkList :public Solution_LinkList{
-//private限定_dummyhead只能在此类使用
-//_dummyhead是C++里的一种约定
-//一定要先声明一下，再使用
-
-
-public:
 	//构造方法，创建虚拟头节点
 	//MyLinkList() {
 	//	_dummyhead = new LNode(0);
 	//}
+	LNode* addAtHead(LNode* head) {
+		LNode* cur = head;
+		int val;
+		cout << "请输入插入的值：（头插法，逆序插入，输入-1结束）" << endl;
+		while (true) {
+			cin >> val;
+			if (val == -1)
+				break;
+			if (cur == nullptr) {
+				LNode* newNode = new LNode(val);
+				cur = newNode;
+				size++;
+			}
+			else {
+				LNode* newNode = new LNode(val);
+				dummyhead->next = newNode;
+				newNode->next = cur;
+				cur = newNode;
+				size++;
+			}
+		}
+		cur = dummyhead->next;
+		return cur;
+	}
 
-	int get(LNode* cur, int index) {
+	LNode* addAtTail(LNode* head) {
+		LNode* cur = head;
+		int val;
+		cout << "请输入插入的值：（尾插法，顺序插入，输入-1结束）" << endl;
+		while (true) {
+			cin >> val;
+			if (val == -1)
+				break;
+			if (cur == nullptr) {
+				LNode* newNode = new LNode(val);
+				cur = newNode;
+				dummyhead->next = newNode;
+				size++;
+			}
+			else {
+				dummyhead->next = head;
+				while (cur->next != NULL) {
+					cur = cur->next;
+				}
+				LNode* newNode = new LNode(val);
+				cur->next = newNode;
+				size++;
+			}
+		}
+		cur = dummyhead->next;
+		return cur;
+	}
+		
+	int get(LNode* cur) {
+		int index;
+		cout << "请输入查找哪一个：";
+		cin >> index;
 		dummyhead->next = cur;
-		if (index > size || (index <= 0))
-			return -1;
+		if (index > size || (index <= 0)) {
+			cout << -1;
+			return 0;
+		}
 		for (int i = 1; i < index; i++) {
 			cur = cur->next;
 		}
-		return cur->data;
+		cout << cur->data;
+		return 0;
 	}
 
-	LNode* addAtHead(LNode* cur) {
-		
+	void printList(LNode *head){
+		if (head == NULL) {
+			cout << "链表为空" << endl;
+		}
+		else {
+			LNode* cur = head;
+			cout << "链表元素为：" << endl;
+			while (cur != NULL) {
+				cout << cur->data << ' ';
+				cur = cur->next;
+			}
+			cout << "当前链表长度为：" << size << endl;
+		}
 	}
-
-	LNode* addAtTail(LNode* cur, int val) {
-	}
-		
-
 };
 
 int main() {
 	Solution_array solution;
-	Solution_LinkList solution_linklist;
 	MyLinkList mylinklist;
 
 	int x;
@@ -398,13 +459,19 @@ int main() {
 			mylinklist.printList(L);
 			cout << "请输入删除的节点：";
 			cin >> x;
-			LNode* Lr = solution_linklist.remove_element(L, x);
+			LNode* Lr = mylinklist.remove_element(L, x);
 			mylinklist.printList(Lr);
 			mylinklist.dropList(Lr);
 		}
 			  break;
 		case 10: {
-			
+			LNode* L = mylinklist.createList();	
+			mylinklist.printList(L);
+			L = mylinklist.addAtHead(L);
+			mylinklist.printList(L);
+			L = mylinklist.addAtTail(L);
+			mylinklist.printList(L);
+			mylinklist.get(L);
 		}
 	}
 }

@@ -4,7 +4,7 @@
 using namespace std;
 //好几把难，头要炸了
 
-class Solution_array {
+class Myarray {
 public:
 	int binary_search(vector<int>& arry1, int target) {
 		int low, mid, high;
@@ -220,7 +220,20 @@ public:
 		}
 		return head;
 	}
-
+	void printList(LNode* head) {
+		if (head == NULL) {
+			cout << "链表为空" << endl;
+		}
+		else {
+			LNode* cur = head;
+			cout << "链表元素为：" << endl;
+			while (cur != NULL) {
+				cout << cur->data << ' ';
+				cur = cur->next;
+			}
+			cout << "当前链表长度为：" << size << endl;
+		}
+	}
 
 	LNode* dropList(LNode* head) {
 		LNode* cur = head;
@@ -326,24 +339,15 @@ public:
 		return 0;
 	}
 
-	void printList(LNode *head){
-		if (head == NULL) {
-			cout << "链表为空" << endl;
-		}
-		else {
-			LNode* cur = head;
-			cout << "链表元素为：" << endl;
-			while (cur != NULL) {
-				cout << cur->data << ' ';
-				cur = cur->next;
-			}
-			cout << "当前链表长度为：" << size << endl;
-		}
+	LNode* reverseList(LNode* head) {
+
 	}
+
+	
 };
 
 int main() {
-	Solution_array solution;
+	Myarray myarray;
 	MyLinkList mylinklist;
 
 	int x;
@@ -369,7 +373,7 @@ int main() {
 			int target;
 			cout << "请输入要查的值：";
 			cin >>target;
-			int result = solution.binary_search(arry1, target);
+			int result = myarray.binary_search(arry1, target);
 			if (result == -1) {
 				cout << result << endl;
 				cout << target << "不在数组中返回" << -1;
@@ -385,14 +389,14 @@ int main() {
 			int val;
 			cout << "请输入要删的值：";
 			cin >> val;
-			int result = solution.remove_element(num, val);
+			int result = myarray.remove_element(num, val);
 			for (int i = 0; i < result; i++)
 				cout << num[i] << ' ';
 		}
 			  break;
 		case 3: {
 			vector<int> nums = { -7,-3,2,3,11 };
-			int result=solution.order_arry_square(nums);
+			int result=myarray.order_arry_square(nums);
 			for (int i = 0; i < result; i++)
 				cout << nums[i] << ' ';
 		}
@@ -402,7 +406,7 @@ int main() {
 			int s;
 			cout << "请输入s:";
 			cin >> s;
-			int result = solution.minSubArrayLen(nums, s);
+			int result = myarray.minSubArrayLen(nums, s);
 			cout << "长度为：" << result << endl;
 		}
 			  break;
@@ -410,7 +414,7 @@ int main() {
 			int n;
 			cout << "请输入二维数组的大小：";
 			cin >> n;
-			vector<vector<int>> result = solution.generateMatrix(n);
+			vector<vector<int>> result = myarray.generateMatrix(n);
 			for (int i = 0; i < n; i++) {
 				for (int j = 0; j < n; j++)
 					cout << result[i][j] << '\t';
@@ -433,7 +437,7 @@ int main() {
 			while (1) {
 				cout << "请输入计算的区间：" << endl;
 				cin >> a >> b;
-				int result=solution.sectionSum(nums, a, b);
+				int result=myarray.sectionSum(nums, a, b);
 				cout << result << endl;
 			}
 		}
@@ -445,7 +449,7 @@ int main() {
 			//c++里用（）指定数组长度
 			vector<int> nums(n);
 			vector<int> p(n, 0);
-			solution.sectionSum_improve(n,nums, p);	
+			myarray.sectionSum_improve(n,nums, p);	
 		}
 			  break;
 		case 8: {
@@ -472,6 +476,10 @@ int main() {
 			L = mylinklist.addAtTail(L);
 			mylinklist.printList(L);
 			mylinklist.get(L);
+		}
+			   break;
+		case 11: {
+
 		}
 	}
 }

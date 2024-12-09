@@ -354,6 +354,26 @@ public:
 		return left;
 	}
 
+	LNode* swapPairs(LNode* head) {
+		dummyhead->next = head;
+		LNode* left = head;
+		LNode* right = head->next;
+		dummyhead = right;
+		LNode* temp;
+		LNode* Ltemp;
+		while (right != NULL) {
+			Ltemp = left;
+			temp = right->next;
+			right->next = left;
+			left = temp;
+			if (left != NULL) {
+				right = left->next;
+				Ltemp->next = right;
+			}	
+		}
+		head = dummyhead->next;
+		return head;
+	}
 	
 };
 
@@ -375,6 +395,7 @@ int main() {
 	cout << "10.设计链表" << endl << "\t---get" << endl << "\t---addAtHead" << endl << "\t---addAtTail"
 		<< endl << "\t---addAtIndex" << endl << "\t---deleteAtIndex" << endl;
 	cout << "11.反转链表" << endl;
+	cout << "12.两两交换链表值" << endl;
 
 	cout << "请选择功能：";
 	cin >> x;
@@ -494,7 +515,12 @@ int main() {
 			LNode* L = mylinklist.createList();
 			L=mylinklist.reverseList(L);
 			mylinklist.printList(L);
-
+		}
+			   break;
+		case 12: {
+			LNode* L = mylinklist.createList();
+			L = mylinklist.swapPairs(L);
+			mylinklist.printList(L);
 		}
 	}
 }

@@ -340,7 +340,18 @@ public:
 	}
 
 	LNode* reverseList(LNode* head) {
-
+		//用另一个指针存储位置，右指针从头节点开始
+		LNode* left = NULL;
+		LNode* right = head;
+		LNode* temp;
+		while (right != NULL) {
+			temp = right->next;
+			//left->next = NULL;
+			right->next = left;
+			left = right;
+			right = temp;
+		}
+		return left;
 	}
 
 	
@@ -363,6 +374,7 @@ int main() {
 	cout << "9.移除链表元素" << endl;
 	cout << "10.设计链表" << endl << "\t---get" << endl << "\t---addAtHead" << endl << "\t---addAtTail"
 		<< endl << "\t---addAtIndex" << endl << "\t---deleteAtIndex" << endl;
+	cout << "11.反转链表" << endl;
 
 	cout << "请选择功能：";
 	cin >> x;
@@ -479,6 +491,9 @@ int main() {
 		}
 			   break;
 		case 11: {
+			LNode* L = mylinklist.createList();
+			L=mylinklist.reverseList(L);
+			mylinklist.printList(L);
 
 		}
 	}

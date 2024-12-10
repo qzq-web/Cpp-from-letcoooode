@@ -358,23 +358,30 @@ public:
 		dummyhead->next = head;
 		LNode* left = head;
 		LNode* right = head->next;
-		dummyhead = right;
+		dummyhead->next = right;
 		LNode* temp;
 		LNode* Ltemp;
 		while (right != NULL) {
+			//难搞，再搞搞，感觉能搞出来
 			Ltemp = left;
 			temp = right->next;
-			right->next = left;
+			/*if (temp != NULL) {
+				left->next = temp->next;
+			}*/
+			
 			left = temp;
+			right->next = Ltemp;
 			if (left != NULL) {
+				Ltemp->next = temp;
 				right = left->next;
-				Ltemp->next = right;
-			}	
+			}
+			else {
+				break;
+			}
 		}
 		head = dummyhead->next;
 		return head;
 	}
-	
 };
 
 int main() {

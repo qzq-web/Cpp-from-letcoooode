@@ -338,9 +338,10 @@ public:
 		cout << cur->data;
 		return 0;
 	}
-
+	///
 	LNode* reverseList(LNode* head) {
 		//用另一个指针存储位置，右指针从头节点开始
+		//使用三个指针来操作
 		LNode* left = NULL;
 		LNode* right = head;
 		LNode* temp;
@@ -353,31 +354,28 @@ public:
 		}
 		return left;
 	}
-
+	/// <summary>
+	/// 真的好鸡儿难啊，想了一天多才做一道题
+	/// </summary>
 	LNode* swapPairs(LNode* head) {
+		
 		dummyhead->next = head;
-		LNode* left = head;
-		LNode* right = head->next;
-		dummyhead->next = right;
-		LNode* temp;
-		LNode* Ltemp;
-		while (right != NULL) {
-			//难搞，再搞搞，感觉能搞出来
-			Ltemp = left;
-			temp = right->next;
-			/*if (temp != NULL) {
-				left->next = temp->next;
-			}*/
-			
-			left = temp;
-			right->next = Ltemp;
-			if (left != NULL) {
-				Ltemp->next = temp;
-				right = left->next;
-			}
-			else {
-				break;
-			}
+		LNode* cur = dummyhead;
+		while (cur->next != NULL && cur->next->next != NULL) {
+			//cur->next != NULL必须要在cur->next->next != NULL前面，否则会有空指针报错
+			//使用多个指针虽然能操作方便，但是极为繁琐，容易混淆各个指针的位置
+			//当节点数为偶数或者奇数时的终止条件
+			//当前调节节点的后两个不能是空
+			//temp1负责存储节点
+			LNode* temp1 = cur->next;
+			//temp2负责引导节点
+			LNode* temp2 = cur->next->next->next;
+
+			//下面这段代码，最好是在纸上画一画，才能清楚明白
+			cur->next = cur->next->next;
+			cur->next->next = temp1;
+			temp1->next = temp2;
+			cur = cur->next->next;
 		}
 		head = dummyhead->next;
 		return head;

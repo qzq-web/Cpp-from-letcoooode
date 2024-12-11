@@ -380,6 +380,51 @@ public:
 		head = dummyhead->next;
 		return head;
 	}
+
+	LNode* removeNthFromEnd(LNode* head, int val) {
+		//删除倒数第val个节点就是删除第  length-val+1 个节点
+		//此时知道链表的长度
+		//如果不知道长度的话，我会先算一下链表长度，这样时间复杂度很高了
+		/*
+		int count = size - val + 1;
+		dummyhead->next = head;
+		LNode* cur = dummyhead;
+		if (head == NULL|| head->next == NULL) {
+			head = NULL;
+			return head;
+		}
+
+		for (int i = 1; i < count; i++) {
+			cur = cur->next;
+		}
+		cur->next = cur->next->next;
+		cur = dummyhead->next;
+		return cur;
+		*/
+
+		//此时不知道链表的长度
+		//使用右指针走到要删除元素的对称位置
+		//非常巧妙
+		dummyhead->next = head;
+		LNode* left = dummyhead;
+		LNode* right = dummyhead;
+		if (head == NULL)
+			return head;
+
+		while (val-- && right != NULL)	//让右指针移动到待删除元素的对称位置
+			right = right->next;
+
+		right = right->next;	//此时要再继续移动一次，好让左指针移动到要删除元素的前一个位置
+
+		while (right != NULL) {
+			left = left->next;
+			right = right->next;
+		}
+
+		left->next = left->next->next;	//删除元素
+
+		return dummyhead->next;
+	}
 };
 
 int main() {
@@ -401,6 +446,7 @@ int main() {
 		<< endl << "\t---addAtIndex" << endl << "\t---deleteAtIndex" << endl;
 	cout << "11.反转链表" << endl;
 	cout << "12.两两交换链表值" << endl;
+	cout << "13.删除链表倒数第n个节点" << endl;
 
 	cout << "请选择功能：";
 	cin >> x;
@@ -525,6 +571,15 @@ int main() {
 		case 12: {
 			LNode* L = mylinklist.createList();
 			L = mylinklist.swapPairs(L);
+			mylinklist.printList(L);
+		}
+		case 13: {
+			int val;
+			LNode* L = mylinklist.createList();
+			mylinklist.printList(L);
+			cout << "删除倒数第几个节点：";
+			cin >> val;
+			L = mylinklist.removeNthFromEnd(L, val);
 			mylinklist.printList(L);
 		}
 	}

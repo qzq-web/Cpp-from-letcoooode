@@ -425,6 +425,85 @@ public:
 
 		return dummyhead->next;
 	}
+
+	int getIntersectionNode(LNode* headA, LNode* headB) {
+		//这个题的主函数不能调用createlist创建两个链表，因为这两个链表内存不相同，永远不可能相交
+	
+		int lenA = 0, lenB = 0;
+		LNode* curA = headA;
+		LNode* curB = headB;
+
+		//首先求一下两个链表的长度
+		while (curA != NULL) {
+			lenA++;
+			curA = curA->next;
+		}
+		while (curB != NULL) {
+			lenB++;
+			curB = curB->next;
+		}
+
+		curA = headA;
+		curB = headB;
+
+		//这样太繁琐了
+		/*if (lenA == lenB) {
+			while (curA != NULL) {
+				if (curA == curB) {
+					return curA->data;
+				}
+				curA = curA->next;
+				curB = curB->next;
+			}
+			return NULL;
+		}
+		
+		if (lenA > lenB) {
+			for (int i = 1; i <= lenA - lenB; i++) {
+				curA = curA->next;
+			}
+			while (curA != NULL) {
+				if (curA == curB) {
+					return curA->data;
+				}
+				curA = curA->next;
+				curB = curB->next;
+			}
+			return NULL;
+		}
+
+		if (lenA < lenB) {
+			for (int i = 1; i <= lenB - lenA; i++) {
+				curB = curB->next;
+			}
+			while (curA != NULL) {
+				if (curA == curB) {
+					return curA->data;
+				}
+				curA = curA->next;
+				curB = curB->next;
+			}
+			return NULL;
+		}*/
+
+		//简化操作
+		//始终让curA指向最长的
+		if (lenB > lenA) {
+			swap(lenA, lenB);
+			swap(curA, curB);
+		}
+		for (int i = 1; i <= lenA - lenB; i++)
+			curA = curA->next;
+		while (curA != NULL) {
+			if (curA == curB) {
+				return curA->data;
+			}
+			curA = curA->next;
+			curB = curB->next;
+		}
+		return NULL;
+
+	}
 };
 
 int main() {
@@ -447,6 +526,7 @@ int main() {
 	cout << "11.反转链表" << endl;
 	cout << "12.两两交换链表值" << endl;
 	cout << "13.删除链表倒数第n个节点" << endl;
+	cout << "14.寻找两个链表的相交节点" << endl;
 
 	cout << "请选择功能：";
 	cin >> x;
@@ -573,6 +653,7 @@ int main() {
 			L = mylinklist.swapPairs(L);
 			mylinklist.printList(L);
 		}
+			   break;
 		case 13: {
 			int val;
 			LNode* L = mylinklist.createList();
@@ -581,6 +662,35 @@ int main() {
 			cin >> val;
 			L = mylinklist.removeNthFromEnd(L, val);
 			mylinklist.printList(L);
+		}
+			   break;
+		case 14: {
+
+			//创建链表A
+			//LNode* headA = new LNode(0);
+			//headA->next = new LNode(9);
+			//headA->next->next = new LNode(1);
+			//headA->next->next->next = new LNode(2);
+			//headA->next->next->next->next = new LNode(4);
+
+			////创建链表B
+			//LNode* headB = new LNode(3);
+			//headB->next = headA->next->next->next;  // 链表B从3开始与链表A相交
+
+			LNode* headB = new LNode(5);
+			headB->next = new LNode(0);
+			headB->next->next = new LNode(1);
+			headB->next->next->next = new LNode(8);
+			headB->next->next->next->next = new LNode(4);
+			headB->next->next->next->next->next = new LNode(5);
+
+			LNode* headA = new LNode(4);
+			headA->next = new LNode(1);
+			headA->next->next = headB->next->next->next;
+
+			int result = mylinklist.getIntersectionNode(headA, headB);
+
+			cout << "两个链表的相交节点是：" << result << endl;
 		}
 	}
 }

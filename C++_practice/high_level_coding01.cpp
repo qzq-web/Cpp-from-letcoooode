@@ -504,6 +504,18 @@ public:
 		return NULL;
 
 	}
+
+	int detectCycle(LNode* head) {
+		dummyhead->next = head;
+		LNode* cur = head;
+		LNode* temp = head;
+		while (temp != NULL) {
+			
+		}
+
+		return 0;
+
+	}
 };
 
 int main() {
@@ -527,6 +539,7 @@ int main() {
 	cout << "12.两两交换链表值" << endl;
 	cout << "13.删除链表倒数第n个节点" << endl;
 	cout << "14.寻找两个链表的相交节点" << endl;
+	cout << "15.探测链表中的环" << endl;
 
 	cout << "请选择功能：";
 	cin >> x;
@@ -692,5 +705,28 @@ int main() {
 
 			cout << "两个链表的相交节点是：" << result << endl;
 		}
+			   break;
+		case 15: {
+			int pos;
+			LNode* L = mylinklist.createList();
+			LNode* cur = L;
+			LNode* temp = L;
+			cout << "请输入链表尾连接到哪一个节点：";
+			cin >> pos;
+			if (pos == -1)
+				goto begin;
+
+			while (cur->next != NULL)
+				cur = cur->next;
+			for (int i = 1; i < pos; i++) {
+				temp = temp->next;
+			}
+			cur->next = temp;
+
+			begin:
+			int result = mylinklist.detectCycle(L);
+
+		}
+			   break;
 	}
 }

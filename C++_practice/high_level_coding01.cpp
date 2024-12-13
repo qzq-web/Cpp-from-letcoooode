@@ -2,7 +2,7 @@
 #include<vector>
 #include<algorithm>
 using namespace std;
-//好几把难，头要炸了
+
 
 class Myarray {
 public:
@@ -23,8 +23,7 @@ public:
 		return -1;
 	}
 	//双指针移除元素法
-	//我就只能这么认为了，return的slow依旧指向remove_element函数里的最后一个元素？	bingo
-	//回答：引用传递，形参会修饰实参
+	//引用传递，形参会修饰实参
 	int remove_element(vector<int>& num, int val) {
 		//双指针法，一个快一个慢，如果不等于就跳过，等于就覆盖
 		int slow = 0, fast;
@@ -186,11 +185,6 @@ struct LNode {
 		LNode(int x) : data(x), next(NULL) {}	//C++要求必须要有这句话
 	};	
 class MyLinkList{
-//private限定_dummyhead只能在此类使用
-//_dummyhead是C++里的一种约定
-//一定要先声明一下，再使用
-
-
 public:
 	LNode* dummyhead = new LNode(0);
 	int size;
@@ -266,10 +260,7 @@ public:
 		delete dummyhead;	//删除虚拟头节点
 		return head;
 	}
-	//构造方法，创建虚拟头节点
-	//MyLinkList() {
-	//	_dummyhead = new LNode(0);
-	//}
+
 	LNode* addAtHead(LNode* head) {
 		LNode* cur = head;
 		int val;
@@ -338,7 +329,7 @@ public:
 		cout << cur->data;
 		return 0;
 	}
-	///
+	
 	LNode* reverseList(LNode* head) {
 		//用另一个指针存储位置，右指针从头节点开始
 		//使用三个指针来操作
@@ -354,9 +345,7 @@ public:
 		}
 		return left;
 	}
-	/// <summary>
-	/// 真的好鸡儿难啊，想了一天多才做一道题
-	/// </summary>
+
 	LNode* swapPairs(LNode* head) {
 		
 		dummyhead->next = head;
